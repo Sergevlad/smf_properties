@@ -30,6 +30,8 @@ radius = []
 
 ################################################
 # Cutting conditions
+# It is much easier to choose this stuff manually...
+#
 
 start = 0.0
 stop = 5.0
