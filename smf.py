@@ -33,7 +33,7 @@ radius = []
 
 start = 0.0
 stop = 5.0
-core = 1.0
+core = 1.2
 core_ind = 0
 
 ################################################
@@ -56,8 +56,8 @@ for ind, item in enumerate(radius):
     if abs(item-core) <= 0.00001:
         core_ind = ind
 
+
 profile_function = [(max(delta)**2 - n**2)/(max(delta)**2 - delta[core_ind]**2) for n in delta]
-#profile_function = [(max(delta)**2 - n**2)/(max(delta)**2 - min(delta)**2) for n in delta]
 
 pl.plot(radius, profile_function)
 pl.title('Bi213 profile function')
