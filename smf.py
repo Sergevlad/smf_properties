@@ -5,6 +5,7 @@
 ###################################################
 
 import pylab as pl
+import math
 
 step_index = []
 radial_coordinate = []
@@ -58,11 +59,38 @@ for ind, item in enumerate(radius):
     if abs(item-core) <= 0.00001:
         core_ind = ind
 
+NA = math.sqrt(max(delta)**2-delta[core_ind]**2)
 
-profile_function = [(max(delta)**2 - n**2)/(max(delta)**2 - delta[core_ind]**2) for n in delta]
+profile_function = [(max(delta)**2 - n**2)/(NA**2) for n in delta]
 
 pl.plot(radius, profile_function)
 pl.title('Bi213 profile function')
 pl.xlabel('Radial coordinate (mm)')
 pl.ylabel('Profile function')
 pl.show()
+
+prof_func = []
+
+for ind, item in enumerate(profile_function):
+    prof_func.append([radius[ind], item])
+
+###################################################
+# Fiber parameters
+#
+
+a = 3           # The radius of the fiber
+wave = 1700     # The wavelength of operation
+
+V = a*2*math.pi*NA
+V2 = V*V
+
+Fw = 0.5
+field = []
+field1 = []
+field2 = []
+
+field.append(1)
+field1.append(0)
+field2.append(-Fw*V2/2)
+
+#for ind, item in enumerate(prof_func):
