@@ -75,12 +75,6 @@ pl.show()
 # radius.extend([ radius[len(radius)-1] + (n+1) * (radius[len(radius)-1]-radius[len(radius)-2]) for n in l ])
 # profile_function.extend([profile_function[len(profile_function)-1]] * len(profile_function))
 
-pl.plot(radius, profile_function)
-pl.title('Bi213 profile function')
-pl.xlabel('Radial coordinate (mm)')
-pl.ylabel('Profile function')
-pl.show()
-
 prof_func = []
 
 for ind, item in enumerate(profile_function):
