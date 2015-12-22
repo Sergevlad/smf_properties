@@ -38,6 +38,7 @@ start = 0.0
 stop = 5.0
 core = 1.2
 core_ind = 0
+cladding_index = 1.46
 
 ################################################
 
@@ -59,9 +60,20 @@ for ind, item in enumerate(radius):
     if abs(item - core) <= 0.00001:
         core_ind = ind
 
-NA = math.sqrt(max(delta) ** 2 - delta[core_ind] ** 2)
+NA = math.sqrt((max(delta)+cladding_index) ** 2 - (delta[core_ind]+cladding_index) ** 2)
+print('NA = ', NA)
 
-profile_function = [(max(delta) ** 2 - n ** 2) / (NA ** 2) for n in delta]
+profile_function = [((max(delta)+cladding_index) ** 2 - (n+cladding_index) ** 2) / (NA ** 2) for n in delta]
+
+pl.plot(radius, profile_function)
+pl.title('Bi213 profile function')
+pl.xlabel('Radial coordinate (mm)')
+pl.ylabel('Profile function')
+pl.show()
+
+# l = range(len(profile_function))
+# radius.extend([ radius[len(radius)-1] + (n+1) * (radius[len(radius)-1]-radius[len(radius)-2]) for n in l ])
+# profile_function.extend([profile_function[len(profile_function)-1]] * len(profile_function))
 
 pl.plot(radius, profile_function)
 pl.title('Bi213 profile function')
@@ -78,10 +90,13 @@ for ind, item in enumerate(profile_function):
 # Fiber parameters
 #
 
-a = 3  # The radius of the fiber
+a = 1000  # The radius of the fiber
 wave = 1700  # The wavelength of operation
 
 V = a * 2 * math.pi * NA / wave
+
+print('V =', V)
+
 V2 = V * V
 
 fw = 0.5
@@ -98,11 +113,6 @@ E = 0
 E1 = 0
 E2 = 0
 
-pl.plot(prof_func)
-pl.show()
-
-counter = 0
-
 while True:
     prev_coord = 0
     for ind, item in enumerate(prof_func):
@@ -117,8 +127,6 @@ while True:
 
             prev_coord = item[0]
 
-    pl.plot(radius, field)
-    pl.show()
 
     if E < 0:
         fw -= Dfw
@@ -134,14 +142,11 @@ while True:
         del field2[1:]
     else:
         break
-        print('fuck')
 
-    print(fw)
-    counter += 1
-    if counter == 10:
-        assert False
 
-pl.plot(radius, profile_function)
+print('fw = ', fw)
+
+pl.plot(radius, [n/max(delta) for n in delta])
 pl.plot(radius, field)
 pl.title('Bi213 field distribution')
 pl.xlabel('Radial coordinate (mm)')
