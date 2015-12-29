@@ -92,7 +92,7 @@ for ind, item in enumerate(profile_function):
 # Fiber parameters
 #
 
-a = 1000  # The radius of the fiber
+a = 1500  # The radius of the fiber
 wave = 1700  # The wavelength of operation
 
 V = a * 2 * math.pi * NA / wave
@@ -210,6 +210,7 @@ while True:
         break
 
 print('Vc = ', math.sqrt(V2c))
+print('lambda_c = ', a * 2 * math.pi * NA / math.sqrt(V2c))
 
 pl.plot(radius, [n / max(delta) for n in delta])
 pl.plot(radius, SMfield)
